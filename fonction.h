@@ -1,27 +1,20 @@
-#ifndef _QUICKIMAGE_H
-#define _QUICKIMAGE_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
 
-//Un pixel, c'est 3 couleurs : rouge, vert, bleu, qui varient de 0 à 255 chacun.
-typedef struct Pixel
-{
-	unsigned char r,g,b;
-} Pixel;
-
-typedef struct Image
-{
-	int w,h;
-	Pixel* dat;
-} Image;
-
-Image* Charger(const char* fichier);
-int Sauver(Image*,const char* fichier);
-Image* NouvelleImage(int w,int h);
-Image* CopieImage(Image*);
-void Lis_Pixel(Image*,int i,int j,Pixel p);
-Pixel Ecrit_Pixel(Image*,int i,int j);
-void SupprimeImage(Image*);
-void lowerletter(char myString[30]);
-void inversion(int theImageArray[1025][1025]);
-void TraitementImage(int theImageArray[1025][1025], int theImageArrayDup[1025][1025], int height, int width);
-
-#endif
+void transformation(int TableauImage[1025][1025], int TableauImage2[1025][1025], int largeur, int hauteur);
+void frame(int TableauImage[1025][1025], int largeur, int hauteur);
+void luminosite(int TableauImage[1025][1025]);
+void convolutionTEST(int TableauImage[1025][1025], int TableauImage2[1025][1025], int largeur, int hauteur);
+void conMatrixMult(int TableauImage[1025][1025], int TableauImage2[1025][1025], int Matrice[3][3], int i, int j, int diviseur, int soustraction);
+void lettreINF(char chaine[30]);
+void Inversion(int TableauImage[1025][1025]);
+void Seuil(int TableauImage[1025][1025]);
+void Traitement(int TableauImage[1025][1025], int TableauImage2[1025][1025], int hauteur, int largeur);
+//lis les infos de lentete de l'image d'entrer et les stock
+FILE* Lire_entete(int* hauteur,int* largeur,int* maxPixel,char* pgmnom);
+//lis les infos dans lentete et creer un tableau a partir de celle ci
+void Lit_Creer_TAB(int Tab[][1025],int* hauteur,int* largeur,int* maxPixel,char* fichierEntrer);
+//ecriture du nouveau fichier a partir du nouveau tableau qui a ete changé grace a traitement
+void Ecrit_nouveau_fichier(char* fichierSortie,int Tab[][1025],char* commentaire,int hauteur,int largeur,int maxPixel);
